@@ -1,0 +1,1 @@
+Open mapBasic.html in browser of your choice.

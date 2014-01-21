@@ -1,0 +1,1 @@
+Open mapBasicWithEvents.html in browser of your choice.
