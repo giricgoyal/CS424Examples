@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+
+<!-- ######################################################
+	Author : Giric Goyal 
+
+	Illustration of:
+		- plotting on maps
+		- How to include js files in html and other js files
+
+###########################################################-->
+<html>
+	<head>
+		<style>
+			body {
+				margin: 0px;
+				padding: 0px;
+				}
+		</style>
+	</head>
+	<body>
+		<div id = "container"></div>
+
+		<!-- use script tags to include js files in your html -->
+		<script src = "kinetic.js"></script>
+		<script src = "util.js"></script>
+		 
+		<!-- javascript for all creating everything -->  
+		<script>
+
+			// call back function to show names or hide names
+			function showDetails(name) {
+				if (name == 0) {
+					// get mouse position from the stage (defined below)
+					var mousePos = stage.getPointerPosition();
+					// use the setText to set the text of the 'text' (also defined below)
+					text.setText('New Delhi');
+					// use the set position to set the new Position which is the mouse position
+					text.setPosition(mousePos.x, mousePos.y);
+					// redraw the layer (defined below)
+					layer.draw();
+				}
+				else if (name == 1) {
+					var mousePos = stage.getPointerPosition();
+					text.setText('Chicago');
+					text.setPosition(mousePos.x, mousePos.y);
+					layer.draw();
+				}
+				else if (name == 2) {
+					var mousePos = stage.getPointerPosition();
+					text.setText('New York');
+					text.setPosition(mousePos.x, mousePos.y);
+					layer.draw();
+				}
+				else if (name == 3) {
+					var mousePos = stage.getPointerPosition();
+					text.setText('Sydney');
+					text.setPosition(mousePos.x, mousePos.y);
+					layer.draw();
+				}
+				else if (name == 4) {
+					var mousePos = stage.getPointerPosition();
+					text.setText('Paris');
+					text.setPosition(mousePos.x, mousePos.y);
+					layer.draw();
+				}
+
+				// if not on the circles then, hide the text.
+				else {
+					// set text to null
+					text.setText(' ');
+					// redraw.
+					layer.draw();
+				}
+			}
+
+			// create a text to show the name of the cities
+			var text = new Kinetic.Text({
+					x: 10,
+					y: 10,
+					fontFamily: 'Calibri',
+					fontSize: 18,
+					text: '',
+					fill: 'black'
+				});
+
+			// create a Stage using Kinetic.Stage
+			var stage = new Kinetic.Stage({
+				container: 'container',
+				width: 1920,
+				height: 1080
+				});
+
+			// create a Layer using Kinetic.Layer
+			var layer = new Kinetic.Layer();
+			
+			// an image object for the map image.
+			var imageObj = new Image();
+
+			// this method is called when the page loads.
+			imageObj.onload = function() {
+
+				// create Image using Kinetic.Image method.
+				var world = new Kinetic.Image({
+					x: 20,
+					y: 5,
+					// assign the image object to 'image' attribute
+					image: imageObj,
+					width: 634,
+					height: 477
+					});
+					
+				// Call the latlon2D method that converts lat lon to 2D coordinates
+				// Method defined in Util object in util.js
+				Util.latLon2D(0);
+
+				// create circles using Kinetic.Circle method.
+				var dot = new Kinetic.Circle({
+					// x,y coordinates from Util object in util.js
+					x: Util.posx,
+					y: Util.posy,
+					radius: 4,
+					fill: 'red',
+					stroke: 'black',
+					strokeWidth: 1
+					});
+				
+
+				Util.latLon2D(1);
+				var dot1 = new Kinetic.Circle({
+					x: Util.posx,
+					y: Util.posy,
+					radius: 4,
+					fill: 'blue',
+					stroke: 'black',
+					strokeWidth: 1
+					});
+				
+				Util.latLon2D(2);
+				var dot2 = new Kinetic.Circle({
+					x: Util.posx,
+					y: Util.posy,
+					radius: 4,
+					fill: 'black',
+					stroke: 'black',
+					strokeWidth: 1
+					});
+					
+				Util.latLon2D(3);
+				var dot3 = new Kinetic.Circle({
+					x: Util.posx,
+					y: Util.posy,
+					radius: 4,
+					fill: 'yellow',
+					stroke: 'black',
+					strokeWidth: 1
+					});
+				
+				Util.latLon2D(4);
+				var dot4 = new Kinetic.Circle({
+					x: Util.posx,
+					y: Util.posy,
+					radius: 4,
+					fill: 'green',
+					stroke: 'black',
+					strokeWidth: 1
+					});
+
+				
+
+				// add click event to the dots for more information
+				dot.on('click', function() { showDetails(0); });
+				dot1.on('click', function() { showDetails(1); });
+				dot2.on('click', function() { showDetails(2); });
+				dot3.on('click', function() { showDetails(3); });
+				dot4.on('click', function() { showDetails(4); });
+				world.on('click', function() { showDetails(10); });
+
+
+				// add circles/dots, map to the layer	
+				layer.add(dot);
+				layer.add(dot1);
+				layer.add(dot2);
+				layer.add(dot3);
+				layer.add(dot4);
+				layer.add(world);
+				layer.add(text);
+
+				// add layer to the stage.
+				stage.add(layer);
+
+				// move the shapes (circles) on the top of the map.
+				dot.moveToTop();
+				dot1.moveToTop();
+				dot2.moveToTop();
+				dot3.moveToTop();
+				dot4.moveToTop();
+				text.moveToTop();
+
+				// draw all the circles.
+				layer.draw();
+				};
+
+			// give the image file to the object
+			imageObj.src = 'world.png';
+
+		</script>
+	</body>
+</html>
