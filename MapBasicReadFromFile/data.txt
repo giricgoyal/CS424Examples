@@ -1,0 +1,5 @@
+New Delhi	28.61	77.23
+Chicago	41.85	-87.65
+New York	40.67	-73.94
+Sydney	-33.86	151.211
+Paris	48.8567	2.3508

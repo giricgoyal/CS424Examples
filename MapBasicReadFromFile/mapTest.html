@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+
+<!-- ######################################################
+	Author : Giric Goyal 
+
+	Illustration of:
+		- plotting on maps
+		- How to include js files in html and other js files
+
+###########################################################-->
+<html>
+	<head>
+		<style>
+			body {
+				margin: 0px;
+				padding: 0px;
+				}
+		</style>
+	</head>
+	<body>
+		<div id = "container"></div> <!-- the "Container" class in index.php is different from this. This is just an id-->
+
+		<!-- use script tags to include js files in your html -->
+		<script src = "kinetic.js"></script>
+		<script src = "util.js"></script>
+		<!-- javascript for all creating everything -->  
+		<script type = "text/javascript">
+			// create a Stage using Kinetic.Stage
+			var stage = new Kinetic.Stage({
+				container: 'container', // the "container" class in the index.php is different from this.
+				width: 634,
+				height: 477
+				});
+
+			// create a Layer using Kinetic.Layer
+			var layer = new Kinetic.Layer();
+			
+			// an image object for the map image.
+			var imageObj = new Image();
+
+			// this method is called when the page loads.
+			imageObj.onload = function() {
+
+				// create Image using Kinetic.Image method.
+				var world = new Kinetic.Image({
+					x: 20,
+					y: 5,
+					// assign the image object to 'image' attribute
+					image: imageObj,
+					width: 634,
+					height: 477
+					});
+					
+				// Call the latlon2D method that converts lat lon to 2D coordinates
+				// Method defined in Util object in util.js
+				// To acces the data structure form php, use the php tags.
+				// Can access the php variable here since, this html file was included in the php file. 
+				Util.latLon2D("<?php echo $cArray[0]->name; ?>", <?php echo $cArray[0]->lat; ?>, <?php echo $cArray[0]->lon; ?>);
+
+				// create circles using Kinetic.Circle method.
+				var dot = new Kinetic.Circle({
+					// x,y coordinates from Util object in util.js
+					x: Util.posx,
+					y: Util.posy,
+					radius: 2,
+					fill: 'red',
+					stroke: 'black',
+					strokeWidth: 1
+					});
+				
+
+				Util.latLon2D("<?php echo $cArray[1]->name; ?>", <?php echo $cArray[1]->lat; ?>, <?php echo $cArray[1]->lon; ?>);
+
+				var dot1 = new Kinetic.Circle({
+					x: Util.posx,
+					y: Util.posy,
+					radius: 2,
+					fill: 'blue',
+					stroke: 'black',
+					strokeWidth: 1
+					});
+				
+				Util.latLon2D("<?php echo $cArray[2]->name; ?>", <?php echo $cArray[2]->lat; ?>, <?php echo $cArray[2]->lon; ?>);
+
+				var dot2 = new Kinetic.Circle({
+					x: Util.posx,
+					y: Util.posy,
+					radius: 2,
+					fill: 'black',
+					stroke: 'black',
+					strokeWidth: 1
+					});
+					
+				Util.latLon2D("<?php echo $cArray[3]->name; ?>", <?php echo $cArray[3]->lat; ?>, <?php echo $cArray[3]->lon; ?>);
+
+				var dot3 = new Kinetic.Circle({
+					x: Util.posx,
+					y: Util.posy,
+					radius: 2,
+					fill: 'yellow',
+					stroke: 'black',
+					strokeWidth: 1
+					});
+				
+				Util.latLon2D("<?php echo $cArray[4]->name; ?>", <?php echo $cArray[4]->lat; ?>, <?php echo $cArray[4]->lon; ?>);
+
+				var dot4 = new Kinetic.Circle({
+					x: Util.posx,
+					y: Util.posy,
+					radius: 2,
+					fill: 'green',
+					stroke: 'black',
+					strokeWidth: 1
+					});
+				
+				// add circles/dots, map to the layer	
+				layer.add(dot);
+				layer.add(dot1);
+				layer.add(dot2);
+				layer.add(dot3);
+				layer.add(dot4);
+				layer.add(world);
+
+				// add layer to the stage.
+				stage.add(layer);
+
+				// move the shapes (circles) on the top of the map.
+				dot.moveToTop();
+				dot1.moveToTop();
+				dot2.moveToTop();
+				dot3.moveToTop();
+				dot4.moveToTop();
+
+				// draw all the circles.
+				layer.draw();
+				};
+
+			imageObj.src = 'world.png';
+
+		</script>
+	</body>
+</html>
